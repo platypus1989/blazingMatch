@@ -5,9 +5,7 @@
 #'
 #' @return
 #'
-#'
-#' @import dplyr, magrittr
-closest_index <- function(ctr_score, trt_score){
+closestIndex <- function(ctr_score, trt_score){
   n0 <- nrow(ctr_score)
   n1 <- nrow(trt_score)
 
@@ -44,7 +42,23 @@ closest_index <- function(ctr_score, trt_score){
   }
 
   return(results)
+}
 
+#' @title c++ wrapper function for quick nearest neighbor search for propensity scores
+#'
+#' @param ctr_score data frame containing index and propensity scores for control group
+#' @param trt_score data frame containing index and propensity scores for treatment group
+#'
+#' @return
+#'
+closestIndexCpp <- function(ctr_score, trt_score){
+  ctr_score <- ctr_score[order(ctr_score$score), ]
+  trt_score <- trt_score[order(trt_score$score), ]
+
+  matchedIndex <- nearestScore(as.matrix(ctr_score), as.matrix(trt_score))
+  results <- data.frame(matchedIndex)
+  names(results) <- c('control', 'treatment')
+  return(results)
 }
 
 #' @title blazing fast propensity score matching
@@ -65,7 +79,7 @@ closest_index <- function(ctr_score, trt_score){
 #' result <- blazingMatch(data=lalonde, treatment_var='treat', confounding_vars = confounding_vars, treatment_group = 1)
 #' summary(result$treatment)
 #' summary(result$control)
-blazingMatch <- function(data, treatment_var, confounding_vars, treatment_group){
+blazingMatch <- function(data, treatment_var, confounding_vars, treatment_group, fast=FALSE){
   group_labels <- unique(data[[treatment_var]])
   if ('score' %in% names(data)) {
     stop("data can not have column named as score")
@@ -90,7 +104,12 @@ blazingMatch <- function(data, treatment_var, confounding_vars, treatment_group)
   trt_score <- data.frame(index=c(1:nrow(trt)), score = trt$score)
   ctr_score <- data.frame(index=c(1:nrow(ctr)), score = ctr$score)
 
-  matched_index <- closest_index(ctr_score, trt_score)
+  if (fast) {
+    matched_index <- closestIndexCpp(ctr_score, trt_score)
+  } else {
+    matched_index <- closestIndex(ctr_score, trt_score)
+  }
+
   matched_treatment <- trt[matched_index$treatment, ]
   matched_control <- ctr[matched_index$control, ]
 

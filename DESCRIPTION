@@ -8,4 +8,6 @@ Description: nothing but fast match.
 License: Creative Commons
 Encoding: UTF-8
 LazyData: true
+Imports: Rcpp (>= 0.12.8), RcppArmadillo
+LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.2.1

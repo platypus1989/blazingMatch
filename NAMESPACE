@@ -1,1 +1,4 @@
+export(nearestScore)
+useDynLib(blazingMatch)
+importFrom(Rcpp, evalCpp)
 exportPattern("^[[:alpha:]]+")

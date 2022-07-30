@@ -4,7 +4,13 @@
 \alias{blazingMatch}
 \title{blazing fast propensity score matching}
 \usage{
-blazingMatch(data, treatment_var, confounding_vars, treatment_group)
+blazingMatch(
+  data,
+  treatment_var,
+  confounding_vars,
+  treatment_group,
+  fast = FALSE
+)
 }
 \arguments{
 \item{data}{data frame containing data}
