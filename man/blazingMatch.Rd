@@ -20,6 +20,8 @@ blazingMatch(
 \item{confounding_vars}{confounding variable names}
 
 \item{treatment_group}{value corresponding to the treatment group in treatment variable}
+
+\item{fast}{whether use fast closest index implementation}
 }
 \value{
 list containing two data frame `treatment` and `control`.

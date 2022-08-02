@@ -3,7 +3,7 @@
 #' @param ctr_score data frame containing index and propensity scores for control group
 #' @param trt_score data frame containing index and propensity scores for treatment group
 #'
-#' @return
+#' @return data frame
 #'
 closestIndex <- function(ctr_score, trt_score){
   n0 <- nrow(ctr_score)
@@ -49,7 +49,7 @@ closestIndex <- function(ctr_score, trt_score){
 #' @param ctr_score data frame containing index and propensity scores for control group
 #' @param trt_score data frame containing index and propensity scores for treatment group
 #'
-#' @return
+#' @return data frame
 #'
 closestIndexCpp <- function(ctr_score, trt_score){
   ctr_score <- ctr_score[order(ctr_score$score), ]
@@ -67,6 +67,7 @@ closestIndexCpp <- function(ctr_score, trt_score){
 #' @param treatment_var treatment variable name
 #' @param confounding_vars confounding variable names
 #' @param treatment_group value corresponding to the treatment group in treatment variable
+#' @param fast whether use fast closest index implementation
 #'
 #' @return list containing two data frame `treatment` and `control`.
 #'

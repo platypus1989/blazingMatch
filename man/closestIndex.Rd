@@ -11,6 +11,9 @@ closestIndex(ctr_score, trt_score)
 
 \item{trt_score}{data frame containing index and propensity scores for treatment group}
 }
+\value{
+data frame
+}
 \description{
 quick nearest neighbor search for propensity scores
 }
