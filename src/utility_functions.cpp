@@ -39,8 +39,8 @@ arma::mat nearestScore(arma::mat ctr_score,
     }
     if (index0 + 1 == n0) {
       for (int i=index1; i< n1; i++) {
-        results(index1, 0) = ctr_score(index0, 0);
-        results(index1, 1) = trt_score(i, 0);
+        results(i, 0) = ctr_score(index0, 0);
+        results(i, 1) = trt_score(i, 0);
       }
       return results;
     }
